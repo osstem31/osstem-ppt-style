@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PPT Presentation - 오스템 중국 법인 이커머스 전략 리서치</title>
+    <title>PPT Presentation - 오스템 중국 법인 이커머스 전략</title>
     <style>
         :root {
             --primary-dark: #070324;
@@ -38,10 +38,7 @@
             height: 1080px;
             transform-origin: center center;
             transform: translate(-50%, -50%) scale(1);
-            background-color: #000;
-            border: none !important;
-            outline: none !important;
-            box-shadow: none !important;
+            background-color: var(--primary-dark);
             overflow: hidden;
         }
 
@@ -53,58 +50,62 @@
             height: 1080px;
             background-color: var(--primary-dark);
             display: none;
-            overflow: hidden;
-            z-index: 1;
-            border: none !important;
-            outline: none !important;
         }
-        
+
         .ppt-slide.active {
             display: block !important;
-            z-index: 10;
         }
 
-        /* --- Components --- */
+        .ppt-slide.contents-slide.active,
+        .ppt-slide.ending-slide.active {
+            display: flex !important;
+        }
+
+        /* --- Slide 1: Cover --- */
+        .cover-slide {
+            background-color: white;
+        }
+
         .cover-top {
-            width: 100%;
-            height: 400px;
             background-color: var(--primary-dark);
+            height: 400px;
             position: relative;
-            padding: 120px 200px;
-            z-index: 10;
-        }
-
-        .cover-divider {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 1920px;
-            height: auto;
-            margin-top: -3px;
-            z-index: 10;
+            width: 100%;
         }
 
         .background-globe {
             position: absolute;
             top: 0;
             right: 0;
-            width: 581px;
-            height: 444px;
-            object-fit: cover;
-            opacity: 0.8;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .cover-divider {
+            position: absolute;
+            top: 400px; /* Exact junction */
+            left: 0;
+            width: 1920px;
+            margin-top: -2px; /* Overlap to hide white line */
+            z-index: 5;
         }
 
         .vision-text {
+            position: absolute;
+            top: 80px;
+            left: 100px;
             color: var(--accent-red);
             font-size: 35px;
             font-weight: 800;
-            margin-bottom: 20px;
             letter-spacing: 2px;
         }
 
         .main-title {
+            position: absolute;
+            top: 150px;
+            left: 100px;
             color: var(--text-white);
-            font-size: 80px;
+            font-size: 100px;
             font-weight: 900;
             letter-spacing: -2px;
             line-height: 1.2;
@@ -112,15 +113,15 @@
 
         .cover-bottom {
             height: 680px;
-            padding: 150px 0 0 0;
-            position: relative;
             background-color: white;
+            position: relative;
+            padding: 150px 0 0 0;
         }
 
         .info-list {
             list-style: none;
             margin-left: 300px;
-            margin-top: 200px;
+            margin-top: 250px;
         }
 
         .info-item {
@@ -128,7 +129,7 @@
             align-items: center;
             margin-bottom: 25px;
             color: #000000;
-            font-size: 28px;
+            font-size: 30px;
         }
 
         .info-icon {
@@ -145,20 +146,22 @@
             bottom: 60px;
             right: 140px;
             width: 200px;
-            height: 117px;
-            object-fit: contain;
-            z-index: 5;
+            height: auto;
+        }
+
+        /* --- Slide 2: Contents --- */
+        .contents-slide {
+            background-color: white;
         }
 
         .sidebar {
             width: 212px;
-            height: 100%;
+            height: 1080px;
             background-color: var(--primary-dark);
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            z-index: 10;
         }
 
         .sidebar-title {
@@ -166,401 +169,339 @@
             font-size: 40px;
             font-weight: 800;
             transform: translateY(-20px);
+            letter-spacing: -1px;
         }
 
         .vertical-divider {
             position: absolute;
             top: 0;
-            left: 100%;
-            margin-left: -3px;
-            height: 100%;
-            width: auto;
-            z-index: 10;
+            left: 212px;
+            height: 1080px;
+            margin-left: -2px; /* Overlap */
+            z-index: 5;
         }
 
         .contents-content {
             flex: 1;
-            padding: 100px 100px;
+            padding: 120px 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contents-list {
+            list-style: none;
+            margin-left: 120px;
+        }
+
+        .contents-item {
+            margin-bottom: 45px;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .item-number {
+            color: var(--accent-red);
+            font-size: 40px;
+            font-weight: 800;
+            margin-right: 30px;
+            width: 60px;
+        }
+
+        .item-text {
+            color: var(--text-dark);
+            font-size: 40px;
+            font-weight: 600;
+        }
+
+        /* --- Slide 3: Content Page --- */
+        .content-slide {
             background-color: white;
         }
 
-        .content-slide .content-top {
-            height: 80px;
+        .content-header {
+            height: 100px;
             background-color: var(--primary-dark);
-            position: relative;
             padding: 0 100px;
             display: flex;
             align-items: center;
-            z-index: 10;
+            position: relative;
         }
 
-        .content-slide .content-title {
+        .pointy-divider {
+            position: absolute;
+            top: 100px;
+            left: 0;
+            width: 1920px;
+            margin-top: -2px; /* Overlap */
+            z-index: 5;
+        }
+
+        .content-title {
             color: var(--text-white);
-            font-size: 36px;
+            font-size: 45px;
             font-weight: 800;
         }
 
-        .content-slide .pointy-divider {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 1920px;
-            height: auto;
-            margin-top: -3px;
-            z-index: 10;
-        }
-
-        .content-slide .body-area {
-            padding: 80px 100px;
+        .body-area {
+            height: 980px;
+            padding: 160px 100px;
             background-color: white;
-            min-height: calc(1080px - 80px);
-        }
-
-        .bullet-list {
-            list-style: none;
         }
 
         .bullet-item {
-            font-size: 32px;
-            margin-bottom: 25px;
+            font-size: 45px;
+            color: var(--text-dark);
+            margin-bottom: 50px;
             display: flex;
             align-items: flex-start;
-            color: var(--text-dark);
+            font-weight: 600;
             line-height: 1.4;
         }
 
         .bullet-dot {
-            width: 12px;
-            height: 12px;
+            width: 15px;
+            height: 15px;
             background-color: var(--accent-red);
-            margin-right: 25px;
-            margin-top: 15px;
+            margin-top: 25px;
+            margin-right: 30px;
             flex-shrink: 0;
         }
 
-        .sub-bullet-list {
-            margin-left: 40px;
-            margin-top: 10px;
-            list-style: none;
+        /* --- Slide 4: Ending --- */
+        .ppt-slide.ending-slide.active {
+            display: flex !important;
+            background-color: white;
         }
 
-        .sub-bullet-item {
-            font-size: 24px;
-            color: #555;
-            margin-bottom: 10px;
+        .ending-left {
+            flex: 1.2;
             display: flex;
+            justify-content: center;
             align-items: center;
+            background-color: white;
+            position: relative;
         }
 
-        .sub-bullet-item::before {
-            content: "•";
-            margin-right: 15px;
-            color: var(--accent-red);
+        .thank-you-text {
+            font-size: 160px;
+            font-weight: 800;
+            color: #C1C6C8;
+            line-height: 0.9;
+            text-align: left;
+            transform: translateX(-50px);
+        }
+
+        .ending-right {
+            flex: 1;
+            background-color: var(--primary-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .qna-text {
+            color: var(--text-white);
+            font-size: 80px;
+            font-weight: 800;
+        }
+
+        .ending-divider {
+            position: absolute;
+            top: 0;
+            right: 100%;
+            height: 100%;
+            width: auto;
+            margin-right: -3px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* --- Controls --- */
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.1);
         }
 
         .page-indicator {
             position: absolute;
-            bottom: 40px;
-            right: 60px;
-            font-size: 24px;
+            bottom: 45px;
+            right: 100px;
             color: #aaaaaa;
+            font-size: 24px;
             font-weight: 500;
-            z-index: 20;
+            z-index: 100;
         }
-
-        /* Ending */
-        .ending-slide { display: flex; }
-        .ending-left { flex: 1; background-color: white; display: flex; justify-content: center; align-items: center; }
-        .ending-right { flex: 1; background-color: var(--primary-dark); display: flex; flex-direction: column; justify-content: center; padding: 100px; }
-        .ending-title { font-size: 120px; font-weight: 900; color: var(--text-white); margin-bottom: 30px; }
-        .ending-subtitle { font-size: 40px; color: var(--accent-red); font-weight: 700; }
     </style>
 </head>
 <body>
 
     <div id="ppt-wrapper">
         <!-- Slide 1: Cover -->
-        <div class="ppt-slide active cover-slide">
+        <div class="ppt-slide active cover-slide" id="slide-1">
             <div class="cover-top">
-                <img src="u5.png" alt="Globe" class="background-globe">
-                <div class="vision-text">STRATEGY REPORT</div>
-                <h1 class="main-title">오스템 중국 법인 이커머스 몰 리서치<br><span style="font-size: 45px; font-weight: 600; color: #ccc;">현지화 UX 패러다임 분석 및 디지털 생태계 구축 전략</span></h1>
-                <img src="divinder.png" alt="Divider" class="cover-divider">
+                <img src="u5.png" alt="Graphic" class="background-globe">
+                <div class="vision-text">VISION 2034</div>
+                <h1 class="main-title">제목을 입력하세요</h1>
             </div>
+            <img src="divinder.png" alt="Divider" class="cover-divider">
             <div class="cover-bottom">
                 <ul class="info-list">
-                    <li class="info-item"><svg class="info-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> 오스템임플란트 중국 법인 전략기획팀</li>
-                    <li class="info-item"><svg class="info-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> 2026. 05. 09</li>
+                    <li class="info-item">
+                        <svg class="info-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span>소속팀 / 작성자</span>
+                    </li>
+                    <li class="info-item">
+                        <svg class="info-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>00매</span>
+                    </li>
+                    <li class="info-item">
+                        <svg class="info-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        <span>2026.00.00</span>
+                    </li>
                 </ul>
-                <img src="Logo.png" alt="Logo" class="osstem-logo">
+                <img src="Logo.png" alt="OSSTEM Logo" class="osstem-logo">
             </div>
         </div>
 
         <!-- Slide 2: Contents -->
-        <div class="ppt-slide contents-slide">
+        <div class="ppt-slide contents-slide" id="slide-2">
             <div class="sidebar">
-                <div class="sidebar-title">CONTENTS</div>
-                <img src="divinder_2.png" alt="Divider" class="vertical-divider">
+                <h2 class="sidebar-title">Contents</h2>
             </div>
-            <div class="contents-content" style="display: flex; flex-direction: column; justify-content: center;">
-                <ul class="contents-list" style="list-style: none;">
-                    <li class="contents-item" style="font-size: 34px; margin-bottom: 25px;"><span style="color: var(--accent-red); font-weight: 800; margin-right: 30px;">01</span> I. 리서치 배경 및 목적</li>
-                    <li class="contents-item" style="font-size: 34px; margin-bottom: 25px;"><span style="color: var(--accent-red); font-weight: 800; margin-right: 30px;">02</span> UX 패러다임 차이 분석 (서구형 vs 중국형)</li>
-                    <li class="contents-item" style="font-size: 34px; margin-bottom: 25px;"><span style="color: var(--accent-red); font-weight: 800; margin-right: 30px;">03</span> VBP 정책 영향 및 대량 주문 시스템</li>
-                    <li class="contents-item" style="font-size: 34px; margin-bottom: 25px;"><span style="color: var(--accent-red); font-weight: 800; margin-right: 30px;">04</span> 위챗(WeChat) 생태계 및 연동 전략</li>
-                    <li class="contents-item" style="font-size: 34px; margin-bottom: 25px;"><span style="color: var(--accent-red); font-weight: 800; margin-right: 30px;">05</span> II. 플랫폼 설계 및 운영 전략</li>
-                    <li class="contents-item" style="font-size: 34px; margin-bottom: 25px;"><span style="color: var(--accent-red); font-weight: 800; margin-right: 30px;">06</span> 정보 밀집형 레이아웃 및 VIP 체계</li>
-                    <li class="contents-item" style="font-size: 34px; margin-bottom: 25px;"><span style="color: var(--accent-red); font-weight: 800; margin-right: 30px;">07</span> 물류 및 규제 대응 (콜드체인, UDI)</li>
-                    <li class="contents-item" style="font-size: 34px; margin-bottom: 25px;"><span style="color: var(--accent-red); font-weight: 800; margin-right: 30px;">08</span> 2025-2026 로드맵 및 향후 과제</li>
+            <img src="divinder_2.png" alt="Vertical Divider" class="vertical-divider">
+            <div class="contents-content">
+                <ul class="contents-list">
+                    <li class="contents-item">
+                        <span class="item-number">1.</span>
+                        <span class="item-text">내용을 입력하세요</span>
+                    </li>
+                    <li class="contents-item">
+                        <span class="item-number">2.</span>
+                        <span class="item-text">내용을 입력하세요</span>
+                    </li>
+                    <li class="contents-item">
+                        <span class="item-number">3.</span>
+                        <span class="item-text">내용을 입력하세요</span>
+                    </li>
+                    <li class="contents-item">
+                        <span class="item-number">4.</span>
+                        <span class="item-text">내용을 입력하세요</span>
+                    </li>
+                    <li class="contents-item">
+                        <span class="item-number">5.</span>
+                        <span class="item-text">내용을 입력하세요</span>
+                    </li>
                 </ul>
             </div>
         </div>
 
-        <!-- Slide 3: I. Research Background -->
-        <div class="ppt-slide content-slide">
-            <div class="content-top">
-                <h2 class="content-title">01. I. 리서치 배경 및 목적</h2>
-                <img src="divinder_3.png" alt="Divider" class="pointy-divider">
+        <!-- Slide 3: Content Page -->
+        <div class="ppt-slide content-slide" id="slide-3">
+            <div class="content-header">
+                <h2 class="content-title">I. 제목을 입력하세요</h2>
             </div>
+            <img src="divinder_3.png" alt="Divider" class="pointy-divider">
             <div class="body-area">
                 <ul class="bullet-list">
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>현지화 필수성</strong><ul class="sub-bullet-list"><li>중국 이커머스 시장의 독특한 사용자 관행(Habits) 수용 필요</li><li>글로벌 표준보다 현지 시장 표준(Local Standards)에 부합하는 설계</li></ul></div></li>
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>핵심 목표</strong><ul class="sub-bullet-list"><li>오프라인 중심 영업에서 디지털 전환(DX) 가속화</li><li>B2B 거래 효율성 증대 및 중국 내 시장 점유율 공고화</li></ul></div></li>
+                    <li class="bullet-item"><div class="bullet-dot"></div> 상세 내용이 들어갑니다.</li>
+                    <li class="bullet-item"><div class="bullet-dot"></div> 주요 지표 및 성과를 기술합니다.</li>
+                    <li class="bullet-item"><div class="bullet-dot"></div> 핵심 전략 방향을 제시합니다.</li>
                 </ul>
+                <div class="page-indicator">3 / 4</div>
             </div>
-            <div class="page-indicator">3 / 13</div>
         </div>
 
-        <!-- Slide 4: UX Paradigm Difference -->
-        <div class="ppt-slide content-slide">
-            <div class="content-top">
-                <h2 class="content-title">02. UX 패러다임 차이 분석</h2>
-                <img src="divinder_3.png" alt="Divider" class="pointy-divider">
-            </div>
-            <div class="body-area">
-                <div style="display: flex; gap: 50px;">
-                    <div style="flex: 1; background: #f9f9f9; padding: 40px; border-radius: 15px;">
-                        <h3 style="color: #666; margin-bottom: 20px;">서구형 (Simplicity)</h3>
-                        <ul class="sub-bullet-list">
-                            <li style="font-size: 26px;">미니멀리즘, 넓은 여백</li>
-                            <li style="font-size: 26px;">한 번에 하나의 핵심 가치 전달</li>
-                            <li style="font-size: 26px;">검색 위주의 네비게이션</li>
-                        </ul>
-                    </div>
-                    <div style="flex: 1; background: #fff5f5; padding: 40px; border-radius: 15px; border: 2px solid var(--accent-red);">
-                        <h3 style="color: var(--accent-red); margin-bottom: 20px;">중국형 (High-Density)</h3>
-                        <ul class="sub-bullet-list">
-                            <li style="font-size: 26px;"><strong>고정보 밀집형 UI (高信息密度)</strong></li>
-                            <li style="font-size: 26px;">탐색 위주, 수많은 옵션 동시 노출</li>
-                            <li style="font-size: 26px;">강렬한 컬러와 프로모션 뱃지</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="page-indicator">4 / 13</div>
-        </div>
-
-        <!-- Slide 5: VBP Policy -->
-        <div class="ppt-slide content-slide">
-            <div class="content-top">
-                <h2 class="content-title">03. VBP 정책 영향 및 대응</h2>
-                <img src="divinder_3.png" alt="Divider" class="pointy-divider">
-            </div>
-            <div class="body-area">
-                <ul class="bullet-list">
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>단가 하락 및 수요 폭증</strong><ul class="sub-bullet-list"><li>VBP(집중구매) 정책으로 인한 가격 40-60% 인하</li><li>수술 건수 폭증에 따른 '박리다매'형 대량 주문 시스템 필수</li></ul></div></li>
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>시스템적 대응</strong><ul class="sub-bullet-list"><li>NMPA 인증 기반의 실시간 자격 검증 및 할인가 자동 적용</li><li>VBP 대상 품목 전용관 및 집채 뱃지 시스템 구축</li></ul></div></li>
-                </ul>
-            </div>
-            <div class="page-indicator">5 / 13</div>
-        </div>
-
-        <!-- Slide 6: WeChat Ecosystem -->
-        <div class="ppt-slide content-slide">
-            <div class="content-top">
-                <h2 class="content-title">04. 위챗(WeChat) 생태계 연동</h2>
-                <img src="divinder_3.png" alt="Divider" class="pointy-divider">
-            </div>
-            <div class="body-area">
-                <ul class="bullet-list">
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>미니프로그램 & 위챗페이</strong><ul class="sub-bullet-list"><li>별도 설치 없는 즉각 주문 환경 제공</li><li>위챗페이 QR 및 자동 결제 알림 플로우 구축</li></ul></div></li>
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>기업위챗(WeCom) 기반 CRM</strong><ul class="sub-bullet-list"><li>영업 사원과 고객 간의 1:1 상담 및 주문 연동</li><li>주문 상태 실시간 푸시 및 재구매 알림 자동화</li></ul></div></li>
-                </ul>
-            </div>
-            <div class="page-indicator">6 / 13</div>
-        </div>
-
-        <!-- Slide 7: II. Design & Strategy -->
-        <div class="ppt-slide content-slide">
-            <div class="content-top">
-                <h2 class="content-title">05. II. 플랫폼 설계 및 운영 전략</h2>
-                <img src="divinder_3.png" alt="Divider" class="pointy-divider">
-            </div>
-            <div class="body-area">
-                <ul class="bullet-list">
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>현지 표준 아키텍처</strong><ul class="sub-bullet-list"><li>중국 이커머스 표준 레이아웃 적용 (풀폭 3단 구조)</li><li>멀티 엔드(PC Web, Mini Program) 통합 관리 시스템</li></ul></div></li>
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>운영 효율화</strong><ul class="sub-bullet-list"><li>중국 내 자사/위탁 물류 연동 및 실시간 배송 추적</li><li>전자영수증(파피아오) 자동 발행 및 세무 시스템 연동</li></ul></div></li>
-                </ul>
-            </div>
-            <div class="page-indicator">7 / 13</div>
-        </div>
-
-        <!-- Slide 8: High-Density Layout -->
-        <div class="ppt-slide content-slide">
-            <div class="content-top">
-                <h2 class="content-title">06. 정보 밀집형 레이아웃 설계</h2>
-                <img src="divinder_3.png" alt="Divider" class="pointy-divider">
-            </div>
-            <div class="body-area">
-                <ul class="bullet-list">
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>3단 헤더 및 사이드 카테고리</strong><ul class="sub-bullet-list"><li>상단: 유틸리티, 중앙: 검색/브랜드, 하단: 내비게이션</li><li>좌측 카테고리 상시 노출로 전문 의료기기 탐색 최적화</li></ul></div></li>
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>시각적 마케팅 요소</strong><ul class="sub-bullet-list"><li>이중 가격 표기 (권장가 vs VBP 특별가)</li><li>VIP 카드 및 포인트 대시보드 상시 노출로 등급 혜택 강조</li></ul></div></li>
-                </ul>
-            </div>
-            <div class="page-indicator">8 / 13</div>
-        </div>
-
-        <!-- Slide 9: VIP System -->
-        <div class="ppt-slide content-slide">
-            <div class="content-top">
-                <h2 class="content-title">07. 회원 등급 체계 (VIP 体系)</h2>
-                <img src="divinder_3.png" alt="Divider" class="pointy-divider">
-            </div>
-            <div class="body-area">
-                <ul class="bullet-list">
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>등급 정의</strong><ul class="sub-bullet-list"><li>거래액 기반 5단계 등급 (일반, 실버, 골드, 플래티넘, 다이아몬드)</li><li>등급별 차등 할인율 및 전용 프로모션관 운영</li></ul></div></li>
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>충성도 강화</strong><ul class="sub-bullet-list"><li>포인트 적립 및 소모품 무료 샘플 신청 권한 부여</li><li>상위 등급 전담 1:1 영업 매니저(WeCom) 매칭</li></ul></div></li>
-                </ul>
-            </div>
-            <div class="page-indicator">9 / 13</div>
-        </div>
-
-        <!-- Slide 10: Logistics & Regulation -->
-        <div class="ppt-slide content-slide">
-            <div class="content-top">
-                <h2 class="content-title">08. 물류 및 규제 대응 시스템</h2>
-                <img src="divinder_3.png" alt="Divider" class="pointy-divider">
-            </div>
-            <div class="body-area">
-                <ul class="bullet-list">
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>콜드체인 및 UDI</strong><ul class="sub-bullet-list"><li>온도 민감 제품(골분 등)을 위한 실시간 온도 추적 물류 연동</li><li>의료기기 개별 식별코드(UDI) 기반의 정밀 재고 관리</li></ul></div></li>
-                    <li class="bullet-item"><div class="bullet-dot"></div><div><strong>세무 시스템 (금세 시스템)</strong><ul class="sub-bullet-list"><li>중국 국세청 연동 전자세금계산서(发票) 자동 발행</li><li>B2B 대량 거래 증빙을 위한 사업자 정보 자동 검증</li></ul></div></li>
-                </ul>
-            </div>
-            <div class="page-indicator">10 / 13</div>
-        </div>
-
-        <!-- Slide 11: Roadmap -->
-        <div class="ppt-slide content-slide">
-            <div class="content-top">
-                <h2 class="content-title">09. 2025-2026 구축 로드맵</h2>
-                <img src="divinder_3.png" alt="Divider" class="pointy-divider">
-            </div>
-            <div class="body-area">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 50px;">
-                    <div style="text-align: center; width: 22%;">
-                        <div style="background: var(--accent-red); color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px;">Step 01</div>
-                        <p style="font-weight: 700;">기반 구축 (25' Q1-Q2)</p>
-                        <p style="font-size: 18px; color: #666;">Core 시스템 및 UX 프로토타입</p>
-                    </div>
-                    <div style="text-align: center; width: 22%;">
-                        <div style="background: var(--accent-red); color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px;">Step 02</div>
-                        <p style="font-weight: 700;">생태계 확장 (25' Q3-Q4)</p>
-                        <p style="font-size: 18px; color: #666;">위챗 연동 및 결제 시스템 고도화</p>
-                    </div>
-                    <div style="text-align: center; width: 22%;">
-                        <div style="background: var(--accent-red); color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px;">Step 03</div>
-                        <p style="font-weight: 700;">지능화 (26' Q1-Q2)</p>
-                        <p style="font-size: 18px; color: #666;">AI CRM 및 자동 보충 시스템</p>
-                    </div>
-                    <div style="text-align: center; width: 22%;">
-                        <div style="background: var(--accent-red); color: white; padding: 15px; border-radius: 10px; margin-bottom: 20px;">Step 04</div>
-                        <p style="font-weight: 700;">통합 최적화 (26' Q3-Q4)</p>
-                        <p style="font-size: 18px; color: #666;">현지 물류 및 전사적 데이터 통합</p>
-                    </div>
-                </div>
-            </div>
-            <div class="page-indicator">11 / 13</div>
-        </div>
-
-        <!-- Slide 12: Q&A -->
-        <div class="ppt-slide content-slide">
-            <div class="content-top">
-                <h2 class="content-title">Q & A</h2>
-                <img src="divinder_3.png" alt="Divider" class="pointy-divider">
-            </div>
-            <div class="body-area" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
-                <h3 style="font-size: 60px; color: var(--primary-dark); margin-bottom: 50px;">경청해 주셔서 감사합니다</h3>
-                <div style="background: #f5f5f5; padding: 40px; border-radius: 20px; width: 600px;">
-                    <p style="font-size: 24px; margin-bottom: 15px;"><strong>담당자:</strong> 오스템 중국 법인 프로젝트 매니저</p>
-                    <p style="font-size: 24px; margin-bottom: 15px;"><strong>연락처:</strong> info@osstem.com.cn</p>
-                    <p style="font-size: 24px;"><strong>웹사이트:</strong> www.osstem.com.cn</p>
-                </div>
-            </div>
-            <div class="page-indicator">12 / 13</div>
-        </div>
-
-        <!-- Slide 13: Sources -->
-        <div class="ppt-slide content-slide">
-            <div class="content-top">
-                <h2 class="content-title">참고 자료 및 출처</h2>
-                <img src="divinder_3.png" alt="Divider" class="pointy-divider">
-            </div>
-            <div class="body-area">
-                <ul class="bullet-list" style="font-size: 24px;">
-                    <li class="bullet-item">Market Research: walkthechat.com (China E-commerce UX Patterns)</li>
-                    <li class="bullet-item">Digital Ecosystem: smart-academy.in (WeChat Mini Program Strategies)</li>
-                    <li class="bullet-item">Regulatory Data: NMPA (National Medical Products Administration)</li>
-                    <li class="bullet-item">Project Reference: Osstem China B2B Platform Roadmap</li>
-                </ul>
-            </div>
-            <div class="page-indicator">13 / 13</div>
-        </div>
-
-        <!-- Ending (Slot 14 - Just for symmetry in logic if needed, but we use 13) -->
-        <div class="ppt-slide ending-slide">
+        <!-- Slide 4: Ending -->
+        <div class="ppt-slide ending-slide" id="slide-4">
             <div class="ending-left">
-                <img src="Logo.png" alt="Logo" style="width: 400px;">
+                <div class="thank-you-text">Thank<br>you.</div>
             </div>
             <div class="ending-right">
-                <div class="ending-title">THANK YOU</div>
-                <div class="ending-subtitle">오스템 중국 법인 이커머스 전략</div>
+                <img src="divinder_4.png" alt="divider" class="ending-divider">
+                <div class="qna-text">Q&A</div>
             </div>
         </div>
     </div>
 
+    <div class="controls">
+        <button class="nav-btn" id="prevBtn">←</button>
+        <button class="nav-btn" id="nextBtn">→</button>
+    </div>
+
     <script>
-        let currentSlide = 0;
         const slides = document.querySelectorAll('.ppt-slide');
-        const totalSlides = slides.length;
+        let currentIdx = 0;
 
         function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            slides[index].classList.add('active');
-            currentSlide = index;
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+                
+                const indicator = slide.querySelector('.page-indicator');
+                if (indicator) {
+                    indicator.textContent = `${i + 1} / ${slides.length}`;
+                }
+            });
         }
 
-        function nextSlide() { if (currentSlide < totalSlides - 1) showSlide(currentSlide + 1); }
-        function prevSlide() { if (currentSlide > 0) showSlide(currentSlide - 1); }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') nextSlide();
-            else if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentIdx < slides.length - 1) {
+                currentIdx++;
+                showSlide(currentIdx);
+            }
         });
 
-        document.addEventListener('click', (e) => {
-            if (e.clientX > window.innerWidth / 2) nextSlide();
-            else prevSlide();
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentIdx > 0) {
+                currentIdx--;
+                showSlide(currentIdx);
+            }
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (currentIdx < slides.length - 1) { currentIdx++; showSlide(currentIdx); }
+            } else if (e.key === 'ArrowLeft') {
+                if (currentIdx > 0) { currentIdx--; showSlide(currentIdx); }
+            }
         });
 
         function adjustScale() {
             const wrapper = document.getElementById('ppt-wrapper');
-            const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+            const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080) * 0.95;
             wrapper.style.transform = `translate(-50%, -50%) scale(${scale})`;
         }
 
         window.addEventListener('resize', adjustScale);
         adjustScale();
+        showSlide(currentIdx);
     </script>
 </body>
 </html>
